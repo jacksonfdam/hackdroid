@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -49,6 +50,7 @@ private fun AdminPanelContent(onBack: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
     ) {
         // Warning banner
         Box(

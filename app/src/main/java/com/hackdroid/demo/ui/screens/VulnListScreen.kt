@@ -38,12 +38,13 @@ fun VulnListScreen(navController: NavController, vm: HackDroidViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
     ) {
         // ── Header ─────────────────────────────────────────────────────────
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 52.dp, start = 20.dp, end = 20.dp, bottom = 16.dp),
+                .padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

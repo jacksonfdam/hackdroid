@@ -78,6 +78,7 @@ private fun InsecureStorageContent(
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier

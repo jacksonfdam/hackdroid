@@ -66,6 +66,7 @@ private fun DeepLinkContent(
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
     ) {
         // Warning banner
         Box(

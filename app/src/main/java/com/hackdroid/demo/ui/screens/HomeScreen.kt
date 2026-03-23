@@ -3,6 +3,7 @@ package com.hackdroid.demo.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +31,7 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
             .verticalScroll(rememberScrollState())
     ) {
         // ── Hero section ───────────────────────────────────────────────────
@@ -45,7 +47,7 @@ fun HomeScreen(navController: NavController) {
                         radius = 800f
                     )
                 )
-                .padding(top = 52.dp, start = 20.dp, end = 20.dp, bottom = 24.dp)
+                .padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 24.dp)
         ) {
             Column {
                 Text(

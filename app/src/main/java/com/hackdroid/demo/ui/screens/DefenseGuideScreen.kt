@@ -73,10 +73,11 @@ fun DefenseGuideScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(NavyBackground)
+            .statusBarsPadding()
     ) {
         // Header
         Column(
-            modifier = Modifier.padding(top = 52.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+            modifier = Modifier.padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Text(
                 text       = "Defense Guide",
