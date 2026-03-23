@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- INTENTIONALLY VULNERABLE: Internet permission for cleartext demo -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- INTENTIONALLY VULNERABLE: Storage permission for file read demo -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+        android:debuggable="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.HackDroid"
+        android:icon="@mipmap/ic_launcher">
+
+        <!-- MAIN entry point -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ============================================================ -->
+        <!-- VULN DEMO 1: Exported Activity — no permission required       -->
+        <!-- SEVERITY: CRITICAL                                            -->
+        <!-- HOW TO HACK:                                                  -->
+        <!--   adb shell am start -n com.hackdroid.demo/.vulns.AdminActivity -->
+        <!-- WHAT HAPPENS: Admin panel opens with no authentication        -->
+        <!-- ============================================================ -->
+        <activity
+            android:name=".vulns.AdminActivity"
+            android:exported="true"
+            android:label="Admin Panel" />
+
+        <!-- ============================================================ -->
+        <!-- VULN DEMO 2: Deep Link — unvalidated parameters               -->
+        <!-- SEVERITY: HIGH                                                -->
+        <!-- HOW TO HACK:                                                  -->
+        <!--   adb shell am start -a android.intent.action.VIEW            -->
+        <!--     -d "hackdroid://transfer?amount=9999&to=attacker"         -->
+        <!-- WHAT HAPPENS: App executes transfer with attacker values      -->
+        <!-- ============================================================ -->
+        <activity
+            android:name=".vulns.DeepLinkActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="hackdroid" android:host="transfer" />
+            </intent-filter>
+        </activity>
+
+        <!-- ============================================================ -->
+        <!-- VULN DEMO 3: Exported Service — logs secrets to Logcat        -->
+        <!-- SEVERITY: HIGH                                                -->
+        <!-- HOW TO HACK:                                                  -->
+        <!--   adb shell am startservice -n                                -->
+        <!--     com.hackdroid.demo/.vulns.LeakyService                   -->
+        <!-- HOW TO SEE LEAK:                                              -->
+        <!--   adb logcat | grep HackDroid_LEAK                           -->
+        <!-- ============================================================ -->
+        <service
+            android:name=".vulns.LeakyService"
+            android:exported="true" />
+
+        <!-- ============================================================ -->
+        <!-- VULN DEMO 4: Exported Broadcast Receiver — resets auth state  -->
+        <!-- SEVERITY: LOW                                                 -->
+        <!-- HOW TO HACK:                                                  -->
+        <!--   adb shell am broadcast -a com.hackdroid.RESET_AUTH         -->
+        <!-- WHAT HAPPENS: Auth state cleared, victim logged out           -->
+        <!-- ============================================================ -->
+        <receiver
+            android:name=".vulns.AuthResetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.hackdroid.RESET_AUTH" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ============================================================ -->
+        <!-- VULN DEMO 5: Content Provider — SQL injectable                -->
+        <!-- SEVERITY: MEDIUM                                              -->
+        <!-- HOW TO HACK:                                                  -->
+        <!--   adb shell content query                                     -->
+        <!--     --uri content://com.hackdroid.demo.provider/users        -->
+        <!--     --where "name='x' OR '1'='1'"                            -->
+        <!-- WHAT HAPPENS: Full user table dump including tokens           -->
+        <!-- ============================================================ -->
+        <provider
+            android:name=".vulns.VulnerableContentProvider"
+            android:authorities="com.hackdroid.demo.provider"
+            android:exported="true" />
+
+        <!-- Demo support activities (launched from ExploitLab) -->
+        <activity
+            android:name=".vulns.InsecureStorageActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".vulns.WebViewDemoActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

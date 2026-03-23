@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/jackson.mafra/Downloads/Projects/HackDroid/app/src/main/res/mipmap-mdpi/ic_launcher.xml:*)",
+      "Bash(/Users/jackson.mafra/Downloads/Projects/HackDroid/app/src/main/res/values/colors.xml:*)",
+      "Bash(/Users/jackson.mafra/Downloads/Projects/HackDroid/app/src/main/res/values/font_certs.xml:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

