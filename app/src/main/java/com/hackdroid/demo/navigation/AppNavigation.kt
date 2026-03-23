@@ -155,6 +155,8 @@ private fun BottomTabBar(navController: NavHostController) {
         modifier = Modifier
             .fillMaxWidth()
             .background(NavyBackground)
+            // Pad below the tab bar content so it sits above the system navigation bar
+            .navigationBarsPadding()
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Row(
