@@ -15,11 +15,21 @@ use with real credentials. For educational/demo purposes ONLY.
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/home_screen.png" width="220" alt="Home Screen — vulnerability modules & quick access"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/screenshots/vuln_detail.png" width="220" alt="Vuln Detail — HOW TO HACK + HOW TO PROTECT"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/screenshots/exploit_lab.png" width="220" alt="Exploit Lab — live terminal output"/>
+  <img src="docs/screenshots/screens_overview.png" alt="HackDroid — all 6 screens overview" width="760"/>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/01_home.png"         width="160" alt="Home"/>
+  &nbsp;
+  <img src="docs/screenshots/02_vuln_list.png"    width="160" alt="Vulnerabilities"/>
+  &nbsp;
+  <img src="docs/screenshots/03_vuln_detail.png"  width="160" alt="Vuln Detail — HOW TO HACK / HOW TO PROTECT"/>
+  &nbsp;
+  <img src="docs/screenshots/04_exploit_lab.png"  width="160" alt="Exploit Lab — live terminal"/>
+  &nbsp;
+  <img src="docs/screenshots/05_defense_guide.png" width="160" alt="Defense Guide"/>
+  &nbsp;
+  <img src="docs/screenshots/06_toolkit.png"      width="160" alt="Toolkit"/>
 </p>
 
 ---
