@@ -38,7 +38,7 @@ use with real credentials. For educational/demo purposes ONLY.
 ### Install & Run
 
 ```bash
-git clone https://github.com/yourname/hackdroid
+git clone https://github.com/jacksonfdam/hackdroid
 cd hackdroid
 ./gradlew assembleDebug
 adb install app/build/outputs/apk/debug/app-debug.apk
