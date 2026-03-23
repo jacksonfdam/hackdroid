@@ -7,7 +7,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import java.io.File
 
 /**
@@ -27,7 +27,7 @@ import java.io.File
  * OWASP M4: Insufficient Input/Output Validation
  * OWASP M8: Security Misconfiguration
  */
-class WebViewDemoActivity : AppCompatActivity() {
+class WebViewDemoActivity : ComponentActivity() {
 
     @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {

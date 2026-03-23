@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.activity.compose)
 
+    // Google Fonts for Compose (JetBrains Mono + Inter)
+    implementation(libs.compose.ui.text.google.fonts)
+
     // For intentional vuln demos:
     implementation(libs.webkit)         // WebView
     implementation(libs.room.runtime)   // SQLite (for SQLi demo)

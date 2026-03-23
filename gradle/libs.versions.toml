@@ -22,6 +22,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
 webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+compose-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
