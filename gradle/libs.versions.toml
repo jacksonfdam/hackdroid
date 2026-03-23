@@ -1,13 +1,13 @@
 [versions]
-agp = "8.7.3"
-kotlin = "2.1.0"
-composeBom = "2025.05.00"
-navigationCompose = "2.8.5"
-lifecycleViewmodelCompose = "2.8.7"
-activityCompose = "1.9.3"
-roomRuntime = "2.6.1"
-webkit = "1.12.1"
-coreKtx = "1.15.0"
+agp = "9.0.1"
+kotlin = "2.3.20"
+composeBom = "2026.03.00"
+navigationCompose = "2.9.7"
+lifecycleViewmodelCompose = "2.10.0"
+activityCompose = "1.13.0"
+roomRuntime = "2.8.4"
+webkit = "1.15.0"
+coreKtx = "1.18.0"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -26,4 +26,5 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx"
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+

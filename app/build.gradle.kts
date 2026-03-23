@@ -1,19 +1,24 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.compose)
 }
+
+val jdkVersion = findProperty("jdkVersion").toString()
 
 android {
     namespace = "com.hackdroid.demo"
-    compileSdk = 34
+    compileSdk = findProperty("android.compileSdk").toString().toInt()
+
 
     defaultConfig {
         applicationId = "com.hackdroid.demo"
-        minSdk = 33
-        targetSdk = 36
+        minSdk = findProperty("android.minSdk").toString().toInt()
+        targetSdk = findProperty("android.targetSdk").toString().toInt()
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.0"
     }
 
     buildTypes {
@@ -31,12 +36,14 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.toVersion(jdkVersion)
+        targetCompatibility = JavaVersion.toVersion(jdkVersion)
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.fromTarget(jdkVersion))
+        }
     }
 
     buildFeatures {
