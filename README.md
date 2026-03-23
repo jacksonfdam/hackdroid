@@ -12,6 +12,18 @@ use with real credentials. For educational/demo purposes ONLY.
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/home_screen.png" width="220" alt="Home Screen — vulnerability modules & quick access"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="docs/screenshots/vuln_detail.png" width="220" alt="Vuln Detail — HOW TO HACK + HOW TO PROTECT"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="docs/screenshots/exploit_lab.png" width="220" alt="Exploit Lab — live terminal output"/>
+</p>
+
+---
+
 ## What's Inside
 
 | # | Vulnerability | Severity | Live Demo |
