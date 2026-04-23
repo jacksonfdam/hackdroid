@@ -10,6 +10,20 @@ import com.hackdroid.demo.navigation.AppNavigation
 import com.hackdroid.demo.ui.theme.HackDroidTheme
 
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        init {
+            // Load Frida Gadget when present (jniLibs/*/libfrida-gadget.so).
+            // On non-rooted devices this enables `frida -U -n Gadget`.
+            // Safe to ignore if the .so was not included in the build.
+            try {
+                System.loadLibrary("frida-gadget")
+            } catch (_: UnsatisfiedLinkError) {
+                // Gadget not embedded — Frida requires a rooted device or objection-patched APK
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
