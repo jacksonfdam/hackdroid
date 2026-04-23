@@ -226,12 +226,12 @@ fun StorageDemoScreen(navController: NavController) {
 
             TerminalBlock(
                 lines = listOf(
-                    "$ adb pull /data/data/com.hackdroid.demo/shared_prefs/" to true,
-                    "pull: auth_prefs.xml" to false,
-                    "1 file pulled, 0 skipped." to false,
+                    "$ adb shell run-as com.hackdroid.demo \\" to true,
+                    "    cat .../shared_prefs/auth_prefs.xml" to true,
                     "<string name=\"auth_token\">eyJhbG...</string>" to true,
                     "<string name=\"user_email\">victim@example.com</string>" to true,
-                    "⚠ All credentials readable in plain XML" to false
+                    "<string name=\"session_id\">sess_abc123_plaintext</string>" to true,
+                    "⚠ No root needed — works on any debug build" to false
                 )
             )
         }
@@ -275,9 +275,10 @@ fun SqliDemoScreen(navController: NavController) {
 
             TerminalBlock(
                 lines = listOf(
-                    "$ adb shell content query --uri content://com.hackdroid.demo.provider/users" to true,
-                    """  --where "name='x' OR '1'='1'" """ to true,
-                    "Executing: SELECT * FROM users WHERE name='x' OR '1'='1'" to false,
+                    "$ adb shell content query \\" to true,
+                    "    --uri content://com.hackdroid.demo.provider/users \\" to true,
+                    "    --where \"1=1\"" to true,
+                    "Executing: SELECT * FROM users WHERE 1=1" to false,
                     "Row: id=1, name=alice, token=tok_alice_secret" to true,
                     "Row: id=2, name=bob, token=tok_bob_secret" to true,
                     "✓ Full table dump — classic SQL injection" to true

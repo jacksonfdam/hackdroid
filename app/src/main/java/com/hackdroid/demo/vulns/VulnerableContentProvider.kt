@@ -14,7 +14,12 @@ import android.util.Log
  * HOW TO HACK:
  *   adb shell content query \
  *     --uri content://com.hackdroid.demo.provider/users \
- *     --where "name='x' OR '1'='1'"
+ *     --where "1=1"
+ *
+ *   # Classic tautology (escape inner quotes for the remote shell):
+ *   adb shell content query \
+ *     --uri content://com.hackdroid.demo.provider/users \
+ *     --where "\"name='x' OR '1'='1'\""
  *
  * WHAT HAPPENS:
  *   The `selection` parameter is directly concatenated into a SQL query.
