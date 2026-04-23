@@ -63,6 +63,9 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 
+# Frida Gadget binaries (large, download separately — see app/src/main/jniLibs/README.md)
+**/jniLibs/**/*.so
+
 # Mac/Linux
 .DS_Store
 *.swp

@@ -151,9 +151,29 @@ Open **Vulns → WebViews / JS Bridge → Run Demo Exploit** → use the buttons
 
 ### Demo 8 — Frida Root Bypass
 
+**Rooted device / emulator:**
 ```bash
 frida -U -f com.hackdroid.demo \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
+```
+
+**Non-rooted device (Gadget embedded — see `jniLibs/README.md`):**
+```bash
+# 1. Build & install the app (gadget loads automatically on launch)
+./gradlew assembleDebug && adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+# 2. Launch the app manually on device, then attach
+frida -U -n Gadget \
+  -l app/src/main/assets/frida_scripts/bypass_root_detection.js
+```
+
+**Non-rooted device (no source changes, one-shot):**
+```bash
+pip install objection
+objection patchapk -s app/build/outputs/apk/debug/app-debug.apk
+adb uninstall com.hackdroid.demo && adb install app.objection.apk
+# Launch app, then:
+frida -U -n Gadget -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
 **Expected:** `[HackDroid] ✓ Root detection bypassed — all checks return false`
