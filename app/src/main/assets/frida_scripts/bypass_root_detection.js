@@ -1,12 +1,30 @@
 // HackDroid — Frida Script: Bypass Root Detection
 // ─────────────────────────────────────────────────────────────────────────────
-// Usage:
-//   frida -U -f com.hackdroid.demo -l bypass_root_detection.js
+// HOW FRIDA GADGET WORKS (non-rooted device):
 //
-// What this does:
-//   Hooks RootChecker.isRooted() and forces it to always return false,
-//   regardless of the actual device state. The app believes it is running
-//   on a clean, non-rooted device.
+//   This app embeds libfrida-gadget.so in its native libraries. When the app
+//   starts, MainActivity calls System.loadLibrary("frida-gadget"), which loads
+//   the Gadget into the process. The Gadget opens a Frida server *inside* the
+//   app's own process — no root required, because we're running as the app user.
+//
+//   You then connect from your laptop over USB and inject this script:
+//
+//   $ frida -U -n Gadget -l bypass_root_detection.js
+//
+//   (-n Gadget  →  attach to the waiting Gadget server by name)
+//   (-f com.hackdroid.demo  →  use this form on rooted devices instead)
+//
+// WHAT THIS SCRIPT DOES:
+//
+//   Java.perform() runs inside the app's Dalvik/ART runtime. Java.use() gives
+//   us a JavaScript proxy for the RootChecker class. We replace the
+//   implementation of each check method so it always returns false — the app
+//   now believes it is running on a clean, stock device, regardless of reality.
+//
+//   This exact technique is used against production apps to:
+//     • Bypass licence/DRM checks        • Defeat jailbreak/root detection
+//     • Unlock debug menus               • Intercept encrypted traffic (w/ SSL bypass)
+//     • Dump memory / extract secrets
 //
 // OWASP M7: Insufficient Binary Protections
 // ─────────────────────────────────────────────────────────────────────────────
