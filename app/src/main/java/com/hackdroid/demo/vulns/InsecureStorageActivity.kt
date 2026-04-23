@@ -24,13 +24,13 @@ import com.hackdroid.demo.ui.theme.*
 /**
  * INTENTIONALLY VULNERABLE: Stores auth tokens and PII in plain SharedPreferences.
  *
- * HOW TO HACK:
- *   adb pull /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml
- *   cat auth_prefs.xml
+ * HOW TO HACK (no root needed on debug builds):
+ *   adb shell run-as com.hackdroid.demo \
+ *     cat /data/data/com.hackdroid.demo/shared_prefs/auth_prefs.xml
  *
  * WHAT HAPPENS:
  *   The auth token, user email, and session ID are stored unencrypted.
- *   On a debug build or rooted device, ADB can pull and read the XML directly.
+ *   `run-as` grants package-level access on debug APKs — no root required.
  *
  * OWASP M9: Insecure Data Storage
  * OWASP M6: Inadequate Privacy Controls
@@ -165,22 +165,16 @@ private fun InsecureStorageContent(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text       = "$ adb pull /data/data/com.hackdroid.demo/shared_prefs/",
+                    text       = "$ adb shell run-as com.hackdroid.demo \\",
                     fontFamily = JetBrainsMono,
                     fontSize   = 11.sp,
                     color      = CyanAccent
                 )
                 Text(
-                    text       = "pull: auth_prefs.xml",
+                    text       = "    cat .../shared_prefs/auth_prefs.xml",
                     fontFamily = JetBrainsMono,
                     fontSize   = 11.sp,
-                    color      = TextSecondary
-                )
-                Text(
-                    text       = "1 file pulled, 0 skipped.",
-                    fontFamily = JetBrainsMono,
-                    fontSize   = 11.sp,
-                    color      = TextSecondary
+                    color      = CyanAccent
                 )
                 Text(
                     text       = "<string name=\"auth_token\">$token</string>",
@@ -190,7 +184,13 @@ private fun InsecureStorageContent(
                     color      = CyanAccent
                 )
                 Text(
-                    text       = "⚠ Credentials readable without root on debug builds",
+                    text       = "<string name=\"user_email\">victim@example.com</string>",
+                    fontFamily = JetBrainsMono,
+                    fontSize   = 11.sp,
+                    color      = TextSecondary
+                )
+                Text(
+                    text       = "⚠ No root needed — works on any debug build",
                     fontFamily = JetBrainsMono,
                     fontSize   = 11.sp,
                     color      = WarnAmber
