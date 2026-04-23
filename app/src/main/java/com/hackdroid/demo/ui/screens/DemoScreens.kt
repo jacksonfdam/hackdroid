@@ -321,8 +321,20 @@ fun FridaDemoScreen(navController: NavController) {
 
             Spacer(Modifier.height(16.dp))
             Text(
-                text       = "Frida attaches to the running process and hooks the isRooted() " +
-                             "method, forcing it to always return false regardless of device state.",
+                text       = "Frida is a dynamic instrumentation toolkit. It injects a JavaScript " +
+                             "engine into the running process, letting you intercept and modify any " +
+                             "Java method at runtime — without touching the source code or recompiling.",
+                fontFamily = Inter,
+                fontSize   = 13.sp,
+                color      = TextSecondary,
+                lineHeight = 20.sp
+            )
+
+            Spacer(Modifier.height(12.dp))
+            Text(
+                text       = "This app embeds the Frida Gadget (libfrida-gadget.so) so the demo " +
+                             "works on non-rooted devices. The Gadget is a shared library that " +
+                             "opens a Frida server inside the process the moment the app starts.",
                 fontFamily = Inter,
                 fontSize   = 13.sp,
                 color      = TextSecondary,
@@ -330,14 +342,53 @@ fun FridaDemoScreen(navController: NavController) {
             )
 
             Spacer(Modifier.height(20.dp))
+            SectionLabel("HOW IT WORKS")
+            Spacer(Modifier.height(8.dp))
+
+            listOf(
+                "1" to "App launches → libfrida-gadget.so is loaded via System.loadLibrary()",
+                "2" to "Gadget opens a local Frida server inside the process (port 27042)",
+                "3" to "frida -U -n Gadget connects to that server over USB",
+                "4" to "Script calls Java.use() to get a reference to RootChecker class",
+                "5" to "Replaces isRooted() implementation → always returns false",
+                "6" to "App now believes it's running on a clean, non-rooted device"
+            ).forEach { (num, text) ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text       = num,
+                        fontFamily = JetBrainsMono,
+                        fontSize   = 11.sp,
+                        color      = CyanAccent,
+                        modifier   = Modifier.width(16.dp)
+                    )
+                    Text(
+                        text       = text,
+                        fontFamily = Inter,
+                        fontSize   = 13.sp,
+                        color      = TextSecondary,
+                        lineHeight = 18.sp,
+                        modifier   = Modifier.weight(1f)
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+            SectionLabel("ATTACH COMMAND")
+            Spacer(Modifier.height(8.dp))
 
             TerminalBlock(
                 lines = listOf(
-                    "$ frida -U -f com.hackdroid.demo -l bypass_root_detection.js" to true,
-                    "[HackDroid] Frida attached" to false,
+                    "# Launch the app first, then:" to false,
+                    "$ frida -U -n Gadget -l bypass_root_detection.js" to true,
+                    "[HackDroid] Frida attached via Gadget" to false,
                     "[HackDroid] Hooking RootChecker.isRooted()..." to false,
                     "[HackDroid] isRooted() called — returning false" to true,
-                    "[HackDroid] Root detection bypassed ✓" to true
+                    "[HackDroid] ✓ Root detection bypassed" to true
                 )
             )
 
@@ -373,6 +424,18 @@ fun FridaDemoScreen(navController: NavController) {
                     )
                 }
             }
+
+            Spacer(Modifier.height(16.dp))
+            Text(
+                text       = "Any method in any class can be hooked this way — not just root checks. " +
+                             "SSL pinning, licence validation, biometric gates, payment checks: " +
+                             "all can be bypassed at runtime with a few lines of JavaScript.",
+                fontFamily = Inter,
+                fontSize   = 13.sp,
+                color      = TextTertiary,
+                lineHeight = 20.sp
+            )
+            Spacer(Modifier.height(24.dp))
         }
     }
 }
