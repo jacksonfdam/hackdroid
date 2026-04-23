@@ -1,7 +1,7 @@
 // HackDroid — Frida Script: Bypass Root Detection
 // ─────────────────────────────────────────────────────────────────────────────
 // Usage:
-//   frida -U -f com.hackdroid.demo --no-pause -l bypass_root_detection.js
+//   frida -U -f com.hackdroid.demo -l bypass_root_detection.js
 //
 // What this does:
 //   Hooks RootChecker.isRooted() and forces it to always return false,

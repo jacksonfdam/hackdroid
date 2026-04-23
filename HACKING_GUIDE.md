@@ -186,7 +186,7 @@ adb shell chmod +x /data/local/tmp/frida-server
 adb shell /data/local/tmp/frida-server &
 
 # Run the bypass
-frida -U -f com.hackdroid.demo --no-pause \
+frida -U -f com.hackdroid.demo \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 

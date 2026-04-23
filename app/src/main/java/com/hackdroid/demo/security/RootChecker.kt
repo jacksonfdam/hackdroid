@@ -7,7 +7,7 @@ import java.io.File
  * Frida demo: bypass_root_detection.js hooks isRooted() to always return false.
  *
  * HOW TO BYPASS:
- *   frida -U -f com.hackdroid.demo --no-pause -l bypass_root_detection.js
+ *   frida -U -f com.hackdroid.demo -l bypass_root_detection.js
  */
 class RootChecker {
 

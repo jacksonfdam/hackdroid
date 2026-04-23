@@ -152,7 +152,7 @@ Open **Vulns → WebViews / JS Bridge → Run Demo Exploit** → use the buttons
 ### Demo 8 — Frida Root Bypass
 
 ```bash
-frida -U -f com.hackdroid.demo --no-pause \
+frida -U -f com.hackdroid.demo \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 

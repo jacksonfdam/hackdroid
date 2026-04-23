@@ -37,7 +37,7 @@ private val tools = listOf(
         name        = "FRIDA",
         description = "Runtime hook framework — instrument running Android apps to modify behavior at runtime",
         commands    = listOf(
-            "$ frida -U -f com.app --no-pause -l script.js",
+            "$ frida -U -f com.app -l script.js",
             "$ frida-ps -Ua",
             "$ frida-trace -U -n com.app -m '*[NSString *]'"
         )

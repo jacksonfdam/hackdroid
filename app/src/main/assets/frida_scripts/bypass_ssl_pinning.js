@@ -1,7 +1,7 @@
 // HackDroid — Frida Script: Bypass SSL Certificate Pinning
 // ─────────────────────────────────────────────────────────────────────────────
 // Usage:
-//   frida -U -f com.hackdroid.demo --no-pause -l bypass_ssl_pinning.js
+//   frida -U -f com.hackdroid.demo -l bypass_ssl_pinning.js
 //
 // What this does:
 //   Replaces the app's TrustManager with one that accepts ALL certificates.

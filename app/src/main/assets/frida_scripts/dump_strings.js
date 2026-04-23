@@ -1,7 +1,7 @@
 // HackDroid — Frida Script: Dump SharedPreferences Strings
 // ─────────────────────────────────────────────────────────────────────────────
 // Usage:
-//   frida -U -f com.hackdroid.demo --no-pause -l dump_strings.js
+//   frida -U -f com.hackdroid.demo -l dump_strings.js
 //
 // What this does:
 //   Hooks SharedPreferences.getString() and getAll() to intercept and print

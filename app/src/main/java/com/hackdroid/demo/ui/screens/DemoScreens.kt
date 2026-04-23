@@ -333,7 +333,7 @@ fun FridaDemoScreen(navController: NavController) {
 
             TerminalBlock(
                 lines = listOf(
-                    "$ frida -U -f com.hackdroid.demo --no-pause -l bypass_root_detection.js" to true,
+                    "$ frida -U -f com.hackdroid.demo -l bypass_root_detection.js" to true,
                     "[HackDroid] Frida attached" to false,
                     "[HackDroid] Hooking RootChecker.isRooted()..." to false,
                     "[HackDroid] isRooted() called — returning false" to true,
