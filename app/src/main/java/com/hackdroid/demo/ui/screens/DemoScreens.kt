@@ -325,12 +325,12 @@ fun FridaDemoScreen(navController: NavController) {
 
             listOf(
                 "1" to "App launches → libfrida-gadget.so is loaded via System.loadLibrary()",
-                "2" to "Gadget opens a local Frida server inside the process (port 27042)",
-                "3" to "adb forward tcp:27042 tcp:27042  (tunnel Gadget port)",
-                "3b" to "frida -H 127.0.0.1:27042 attaches over that tunnel",
-                "4" to "Script calls Java.use() to get a reference to RootChecker class",
-                "5" to "Replaces isRooted() implementation → always returns false",
-                "6" to "App now believes it's running on a clean, non-rooted device"
+                "2" to "Gadget opens a Frida server inside the process on TCP port 27042",
+                "3" to "adb forward tcp:27042 tcp:27042  (tunnel Gadget port to laptop)",
+                "4" to "frida -H 127.0.0.1:27042 Gadget attaches over that tunnel",
+                "5" to "Script calls Java.use() to get a reference to RootChecker class",
+                "6" to "Replaces isRooted() implementation → always returns false",
+                "7" to "App now believes it's running on a clean, non-rooted device"
             ).forEach { (num, text) ->
                 Row(
                     modifier = Modifier

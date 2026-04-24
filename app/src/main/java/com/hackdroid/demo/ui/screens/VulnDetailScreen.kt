@@ -226,7 +226,7 @@ fun VulnDetailScreen(vulnId: String, navController: NavController, vm: HackDroid
                         .clip(RoundedCornerShape(12.dp))
                         .background(CyanAccent)
                         .clickable {
-                            navController.navigate(Screen.ExploitLab.createRoute(vuln.id))
+                            navController.navigate(vuln.demoRoute!!)
                         }
                         .padding(vertical = 16.dp),
                     contentAlignment = Alignment.Center
