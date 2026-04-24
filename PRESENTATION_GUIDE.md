@@ -77,7 +77,8 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 > *"This talk is about how Android apps get attacked from the inside — not from the network, not from some mysterious zero-day, but from the front door. By the end, every one of you will be able to pull credentials out of an app on your own phone."*
 
 - Let that land. Don't rush to the next slide.
-- Brief self-intro (30 seconds max).
+- Brief self-intro (30 seconds max):
+  > *"I'm a mobile engineer at Umain, mostly Android. Over the last few years I've developed a bit of an obsession with breaking things — not just understanding how apps work, but how they fail. I've been diving into mobile security, reading, writing, some pen testing. I'm not an expert — yet. But I've learned a lot along the way, and that's what I want to share with you today."*
 - Mention: everything you see today is running on a real device, live, no pre-recorded videos.
 
 ---
