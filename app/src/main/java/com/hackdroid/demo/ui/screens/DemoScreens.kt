@@ -389,7 +389,7 @@ fun FridaDemoScreen(navController: NavController) {
                     "# 2. Forward Gadget port to localhost" to false,
                     "$ adb forward tcp:27042 tcp:27042" to false,
                     "# 3. Attach Frida over TCP" to false,
-                    "$ frida -H 127.0.0.1:27042 -l bypass_root_detection.js" to true,
+                    "$ frida -H 127.0.0.1:27042 Gadget -l bypass_root_detection.js" to true,
                     "[HackDroid] Frida attached via Gadget" to false,
                     "[HackDroid] isRooted() called — returning false" to true,
                     "[HackDroid] ✓ Root detection bypassed" to true

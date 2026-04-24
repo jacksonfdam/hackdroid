@@ -10,7 +10,7 @@
 //   The Gadget listens on TCP port 27042. Connect from your laptop:
 //
 //   $ adb forward tcp:27042 tcp:27042          # tunnel Gadget → localhost
-//   $ frida -H 127.0.0.1:27042 -l bypass_root_detection.js
+//   $ frida -H 127.0.0.1:27042 Gadget -l bypass_root_detection.js
 //
 //   (-H 127.0.0.1:27042  →  connect to Gadget over TCP forwarding)
 //   (-f com.hackdroid.demo  →  use this form on rooted devices instead)

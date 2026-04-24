@@ -31,16 +31,18 @@ curl -L "https://github.com/frida/frida/releases/download/${FRIDA_VERSION}/frida
    ```bash
    adb forward tcp:27042 tcp:27042
    ```
-5. Attach Frida over TCP:
+5. Attach Frida over TCP (target name is `Gadget`):
    ```bash
-   frida -H 127.0.0.1:27042 -l app/src/main/assets/frida_scripts/bypass_root_detection.js
+   frida -H 127.0.0.1:27042 Gadget \
+     -l app/src/main/assets/frida_scripts/bypass_root_detection.js
    ```
    The app unfreezes and the hook is live.
 
-> **Why `-H` instead of `-U -n Gadget`?**  
+> **Why `-H 127.0.0.1:27042 Gadget` instead of `-U -n Gadget`?**  
 > The embedded Gadget listens on a TCP socket (not the USB frida-server transport).  
 > `-U -n` scans a running frida-server — that requires root.  
-> `-H 127.0.0.1:27042` talks directly to the Gadget via ADB port-forwarding — no root needed.
+> `-H 127.0.0.1:27042 Gadget` talks directly to the Gadget via ADB port-forwarding — no root needed.  
+> The process name `Gadget` is how the embedded library identifies itself to the Frida client.
 
 The `.so` files are gitignored (they're ~25 MB each).  
 The `.config.so` config file is committed — it tells the Gadget to listen on port 27042 and pause on load.

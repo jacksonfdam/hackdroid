@@ -359,7 +359,7 @@ adb shell am start -n com.hackdroid.demo/.MainActivity
 adb forward tcp:27042 tcp:27042
 
 # 3. Attach Frida over TCP
-frida -H 127.0.0.1:27042 \
+frida -H 127.0.0.1:27042 Gadget \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
@@ -435,7 +435,7 @@ adb shell content query \
 DEMO 6 — Frida Root Bypass
 adb shell am start -n com.hackdroid.demo/.MainActivity
 adb forward tcp:27042 tcp:27042
-frida -H 127.0.0.1:27042 \
+frida -H 127.0.0.1:27042 Gadget \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 
 EXTRA — Broadcast Reset

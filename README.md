@@ -169,7 +169,7 @@ adb shell am start -n com.hackdroid.demo/.MainActivity
 adb forward tcp:27042 tcp:27042
 
 # 4. Attach Frida over TCP (no root, no frida-server needed)
-frida -H 127.0.0.1:27042 \
+frida -H 127.0.0.1:27042 Gadget \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
