@@ -99,6 +99,7 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 > *"Three billion active devices. The most targeted mobile OS. And apps are handling your bank account, your health data, your identity. The stakes couldn't be higher — and yet security is almost always an afterthought. Let's talk about why."*
 
 **Key points to hit:**
+- Android holds around 72.77% of the global mobile OS market, with iOS trailing at approximately 26–28%.
 - 70% global market share — this isn't a niche
 - Apps are the new perimeter: banking, identity, health, payments all live in APKs
 - Most Android devs learn security the hard way — after a breach
@@ -346,13 +347,19 @@ db.query("users", null, "name = ?", arrayOf(input), null, null, null)
 > *"The tag on the slide says it: NO SOURCE CODE NEEDED. This works on any app, including ones from the Play Store."*
 
 **This app uses the Frida Gadget**, so no root is required — explain briefly:
-> *"We embedded a 24MB library called the Gadget into this APK. When the app launches, it opens a Frida server inside its own process. We attach to it over USB."*
+> *"We embedded a 24MB library called the Gadget into this APK. When the app launches, it pauses and opens a Frida server on TCP port 27042 inside its own process. We forward that port via ADB and attach over it — no root, no frida-server needed."*
 
 **🔧 LIVE DEMO 6 — Bypass Root Detection:**
 
 ```bash
-# App is already running. From terminal:
-frida -U -n Gadget \
+# 1. Launch the app — screen will freeze (Gadget is waiting)
+adb shell am start -n com.hackdroid.demo/.MainActivity
+
+# 2. Forward the Gadget TCP port to localhost
+adb forward tcp:27042 tcp:27042
+
+# 3. Attach Frida over TCP
+frida -H 127.0.0.1:27042 \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
@@ -426,7 +433,9 @@ adb shell content query \
   --where "1=1"
 
 DEMO 6 — Frida Root Bypass
-frida -U -n Gadget \
+adb shell am start -n com.hackdroid.demo/.MainActivity
+adb forward tcp:27042 tcp:27042
+frida -H 127.0.0.1:27042 \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 
 EXTRA — Broadcast Reset
@@ -445,7 +454,7 @@ adb logcat | grep HackDroid_LEAK
 |---------|-----|
 | Device not connecting | Replug USB, `adb kill-server && adb start-server` |
 | App crashed | `adb install -r app/build/outputs/apk/debug/app-debug.apk` |
-| Frida not attaching | Kill and relaunch the app, then retry `frida -U -n Gadget ...` |
+| Frida not attaching | Kill and relaunch app, re-run `adb forward tcp:27042 tcp:27042`, then retry `frida -H 127.0.0.1:27042 ...` |
 | ADB permission denied | Run-as fix: always use `adb shell run-as com.hackdroid.demo ...` |
 | Audience can't read terminal | Zoom in: Cmd+= or increase terminal font on the fly |
 | Running short on time | Skip Demos 5 (SQLi) and the Broadcast/Logcat extras — core story holds |

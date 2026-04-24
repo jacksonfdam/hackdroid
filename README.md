@@ -159,11 +159,17 @@ frida -U -f com.hackdroid.demo \
 
 **Non-rooted device (Gadget embedded — see `jniLibs/README.md`):**
 ```bash
-# 1. Build & install the app (gadget loads automatically on launch)
+# 1. Build & install
 ./gradlew assembleDebug && adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-# 2. Launch the app manually on device, then attach
-frida -U -n Gadget \
+# 2. Launch app — screen freezes (Gadget waiting on port 27042)
+adb shell am start -n com.hackdroid.demo/.MainActivity
+
+# 3. Forward Gadget TCP port to localhost
+adb forward tcp:27042 tcp:27042
+
+# 4. Attach Frida over TCP (no root, no frida-server needed)
+frida -H 127.0.0.1:27042 \
   -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
@@ -172,8 +178,9 @@ frida -U -n Gadget \
 pip install objection
 objection patchapk -s app/build/outputs/apk/debug/app-debug.apk
 adb uninstall com.hackdroid.demo && adb install app.objection.apk
-# Launch app, then:
-frida -U -n Gadget -l app/src/main/assets/frida_scripts/bypass_root_detection.js
+# Launch app, forward port, then attach:
+adb forward tcp:27042 tcp:27042
+frida -H 127.0.0.1:27042 -l app/src/main/assets/frida_scripts/bypass_root_detection.js
 ```
 
 **Expected:** `[HackDroid] ✓ Root detection bypassed — all checks return false`
