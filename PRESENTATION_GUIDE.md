@@ -22,7 +22,7 @@ adb shell am start -n com.hackdroid.demo/.MainActivity
 #    Just launch the app — Gadget loads automatically
 
 # 4. Slide deck open
-open "/Users/jackson.mafra/Desktop/HACKING ANDROID"
+open "slides/slides.pen"
 
 # 5. Terminal font size bumped (audience needs to read it)
 #    Recommended: 18–20pt, dark background
@@ -37,28 +37,33 @@ open "/Users/jackson.mafra/Desktop/HACKING ANDROID"
 
 ---
 
-## Run of Show
+## Slide Order & Run of Show
 
-| # | Slide | Content | Demo | Time |
-|---|-------|---------|------|------|
-| 1 | Title | Opening hook | — | 2 min |
-| 2 | Easter Egg ⭐ | May 4th joke | — | 30 s |
-| 3 | Why Android | Market context | — | 3 min |
-| 4 | Architecture | Android stack | — | 3 min |
-| 5 | App Sandbox | UID / IPC model | — | 3 min |
-| 6 | APK Structure | It's a ZIP | — | 2 min |
-| 7 | Toolkit | Tools overview | — | 2 min |
-| 8 | Reverse Engineering | JADX demo | JADX / decompile | 5 min |
-| 9 | Attack Surface | Map of vulns | — | 2 min |
-| 10 | Exported Components | Demo 1 | `adb am start` | 5 min |
-| 11 | Deep Links | Demo 2 | `adb am start VIEW` | 4 min |
-| 12 | WebViews | Demo 3 | WebView in app | 4 min |
-| 13 | Insecure Storage | Demo 4 | `adb run-as` | 4 min |
-| 14 | SQL Injection | Demo 5 | `adb content query` | 4 min |
-| 15 | Frida | Demo 6 | Frida hook | 6 min |
-| 16 | Takeaways | Attacker / Defender | — | 3 min |
-| 17 | Closing | Call to action | — | 2 min |
+Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
+
+| # | Slide name in file | Headline | Demo | ~Time |
+|---|---|---|---|---|
+| 01 | Slide 01 - Title | HACKING ANDROID / FROM THE INSIDE OUT | — | 2 min |
+| 02 | Slide 02 - Easter Egg ⭐ | THESE AREN'T THE DROIDS YOU'RE LOOKING FOR | — | 30 s |
+| 03 | Slide 02 - Why Android | 70% of the World Runs Android | — | 3 min |
+| 04 | Slide 03 - Architecture | The Architecture Nobody Talks About | — | 3 min |
+| 05 | Slide 04 - App Sandbox | Every App Lives in Its Own Box | — | 3 min |
+| 06 | Slide 05 - APK Structure | An APK Is Just a ZIP File | — | 2 min |
+| 07 | Slide 06 - Toolkit | Tools of the Trade | — | 2 min |
+| 08 | Slide 07 - Reverse Engineering | Reading Code That Was Never Meant to Be Read | JADX | 4 min |
+| 09 | Slide 08 - Attack Surface | Where Things Go Wrong | — | 2 min |
+| 10 | Slide 09 - Exported Components | Leaving the Door Unlocked | `adb am start` | 5 min |
+| 11 | Slide 10 - Deep Links | Malicious Links That Open Your App | `adb am start VIEW` | 4 min |
+| 12 | Slide 11 - WebViews | A Browser Inside Your App | WebView in app | 4 min |
+| 13 | Slide 12 - Insecure Storage | Sensitive Data Left in Plain Sight | `adb run-as` | 4 min |
+| 14 | Slide 13 - SQL Injection | Yes, SQLi Exists in Mobile Apps Too | `adb content query` | 4 min |
+| 15 | Slide 14 - Frida | Hooking Into a Running App | Frida Gadget | 6 min |
+| 16 | Slide 15 - Takeaways | What This Means for Builders and Defenders | — | 3 min |
+| 17 | Slide 16 - Closing | Android Security Is a Mindset | — | 2 min |
 | — | Q&A | | | 10 min |
+
+> **Note:** "Slide 02 - Why Android" is named `02` in the file but sits in position 3 on canvas
+> (the Easter Egg was inserted between them). Present them in canvas order above.
 
 ---
 
