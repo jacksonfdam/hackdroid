@@ -106,7 +106,7 @@ Auth tokens, session IDs, and PII are stored in plain `SharedPreferences` (XML f
 adb pull /data/data/com.hackdroid.demo/shared_prefs/
 ```
 
-**Fix:** Use `EncryptedSharedPreferences` from Jetpack Security. Use Android Keystore for key material.
+**Fix:** Migrate to **Jetpack DataStore** (async, type-safe, coroutine-friendly — `SharedPreferences` is legacy). DataStore is not encrypted by default: wrap sensitive entries with `EncryptedFile` + Android Keystore. Minimum: use `EncryptedSharedPreferences` if still on the old API. Never store raw credentials on device.
 
 ---
 
@@ -153,3 +153,4 @@ adb shell am broadcast -a com.hackdroid.RESET_AUTH
 - Android Security Best Practices: https://developer.android.com/topic/security/best-practices
 - Android Keystore: https://developer.android.com/training/articles/keystore
 - EncryptedSharedPreferences: https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences
+- Jetpack DataStore: https://developer.android.com/topic/libraries/architecture/datastore

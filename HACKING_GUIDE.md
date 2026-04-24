@@ -83,7 +83,10 @@ cat auth_prefs.xml
 
 **Talking points:**
 - Works on any debug build — no root required
-- Fix: `EncryptedSharedPreferences` from Jetpack Security
+- `SharedPreferences` is legacy: synchronous, no type safety, no coroutines
+- Most developers never migrate — and even fewer add encryption
+- **Right fix:** Jetpack DataStore (async + Flow) — but DataStore is also unencrypted by default; wrap with `EncryptedFile` + Keystore for sensitive data
+- **Minimum fix:** `EncryptedSharedPreferences` from Jetpack Security if still on old API
 
 ---
 

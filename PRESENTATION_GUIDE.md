@@ -288,7 +288,7 @@ In HackDroid: Vulns → WebViews / JS Bridge → Run Demo Exploit
 **Sensitive Data Left in Plain Sight**
 
 **Concept (45 seconds):**
-> *"SharedPreferences is the most common way Android apps store small bits of data. Auth tokens, session IDs, user emails. By default, these live as plain XML files in the app's private directory. On a debug build — and lots of internal/beta builds are debug builds — you can read them without root."*
+> *"SharedPreferences is the classic Android key-value store — and it's still everywhere. Auth tokens, session IDs, user emails. By default, these live as plain XML files in the app's private directory. On a debug build — and lots of internal/beta builds are debug builds — you can read them without root."*
 
 **🟡 LIVE DEMO 4 — Read SharedPreferences:**
 
@@ -301,10 +301,14 @@ adb shell run-as com.hackdroid.demo \
 
 > *"`run-as` gives you the app's own user context — no root needed on any debug build. What you see here: a JWT token, an email, a live API key. All readable in one command."*
 
-**Fix:**
-- Use **EncryptedSharedPreferences** from the Jetpack Security library
-- Never store raw credentials — store a reference, not the secret itself
+**Fix — three levels, most devs stop at level 0:**
+- **Level 0 (most apps):** plain `SharedPreferences` — readable XML on disk ❌
+- **Level 1:** `EncryptedSharedPreferences` from Jetpack Security — encrypts values, but it's still the old synchronous API
+- **Level 2 (right answer):** migrate to **Jetpack DataStore** — async, coroutine-friendly, type-safe — and add encryption via `EncryptedFile` + Android Keystore
+- Plus: never store raw credentials — store a reference to a server-side session, not the secret itself
 - Mark production builds with `debuggable=false`
+
+> *"The fix isn't hard. It's one Gradle dependency and a find/replace. The problem is most teams never get around to it."*
 
 ---
 
@@ -390,7 +394,7 @@ frida -H 127.0.0.1:27042 Gadget \
 
 **DEFENDER ACTION:**
 - "Audit your manifest — lock exported components." — This is a 30-minute job on most apps.
-- "Encrypt sensitive data, store only what's needed." — EncryptedSharedPreferences is one import.
+- "Encrypt sensitive data, store only what's needed." — DataStore + EncryptedFile is the right answer; EncryptedSharedPreferences is the minimum.
 - "Validate every input." — Deep links, parameters, WebView URLs. All of them.
 - **"Test your own app the way an attacker would."** — (emphasize this one)
 

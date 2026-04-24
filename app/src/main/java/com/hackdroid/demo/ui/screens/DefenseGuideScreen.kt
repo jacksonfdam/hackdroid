@@ -41,10 +41,11 @@ private val defenseItems = listOf(
         isHighlighted = true
     ),
     DefenseItem(
-        title       = "Encrypt All Local Storage",
-        description = "Use EncryptedSharedPreferences and EncryptedFile from Jetpack Security. Never store tokens, " +
-                      "session IDs, or PII in plain SharedPreferences, SQLite, or the file system. Use Android Keystore " +
-                      "for cryptographic key material.",
+        title       = "Migrate to DataStore — and Encrypt It",
+        description = "SharedPreferences is legacy — synchronous, no type safety, no coroutines. Migrate to Jetpack DataStore. " +
+                      "But DataStore alone is not encrypted: wrap it with EncryptedFile or use EncryptedSharedPreferences for sensitive keys. " +
+                      "Most developers do neither. Never store tokens, session IDs, or PII unencrypted. " +
+                      "Use Android Keystore for all cryptographic key material.",
         isHighlighted = false
     ),
     DefenseItem(
