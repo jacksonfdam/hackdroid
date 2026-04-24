@@ -379,6 +379,32 @@ frida -H 127.0.0.1:27042 Gadget \
 
 **In-app:** Show the Frida screen in HackDroid (Exploit Lab → Frida Hook) — it shows the step-by-step explanation.
 
+**💬 Anticipated Q&A — "Can you do this on any app?"**
+
+Yes. Three ways, each with different requirements:
+
+| Approach | How | Root needed? | Modifies APK? |
+|---|---|---|---|
+| **Embedded Gadget** (this demo) | `libfrida-gadget.so` in `jniLibs/` + `System.loadLibrary()` | ❌ | ✅ needs source |
+| **Objection** (any APK) | `objection patchapk -s app.apk` — injects Gadget, repacks, re-signs | ❌ | ✅ resigns APK |
+| **frida-server** (rooted device) | Push `frida-server` to device, `frida -U -f com.target.app` | ✅ | ❌ |
+
+**Objection flow (no source needed):**
+```bash
+pip install objection
+objection patchapk -s target.apk
+adb install target.objection.apk
+adb forward tcp:27042 tcp:27042
+frida -H 127.0.0.1:27042 Gadget -l script.js
+```
+
+**What breaks these approaches:**
+- **Play Integrity API** — detects re-signed APKs (blocks Objection)
+- **Anti-tampering / self-check** — app verifies its own signature at runtime
+- **Root detection** — blocks frida-server approach on rooted devices
+
+> *"Which is exactly why root detection exists — and exactly why we can bypass it. You hook the check before it runs."*
+
 ---
 
 ### Slide 16 — Takeaways
