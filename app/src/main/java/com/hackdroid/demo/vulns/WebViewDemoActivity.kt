@@ -3,6 +3,8 @@ package com.hackdroid.demo.vulns
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -83,7 +85,10 @@ class AndroidBridge(private val context: Context) {
      */
     @JavascriptInterface
     fun showToast(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+        // Toast must run on the main thread — JS bridge calls arrive on a background thread
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+        }
     }
 
     /**

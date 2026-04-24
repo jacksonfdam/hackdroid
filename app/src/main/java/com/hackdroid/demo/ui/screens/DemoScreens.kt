@@ -1,5 +1,8 @@
 package com.hackdroid.demo.ui.screens
 
+import android.annotation.SuppressLint
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,8 +18,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.hackdroid.demo.ui.theme.*
+import com.hackdroid.demo.vulns.AndroidBridge
 
 // ── Admin Panel Demo (Compose version, mirrors AdminActivity) ────────────────
 @Composable
@@ -131,7 +136,8 @@ fun DeepLinkDemoScreen(navController: NavController) {
     }
 }
 
-// ── WebView Demo (Compose placeholder — actual demo uses WebViewDemoActivity) ─
+// ── WebView Demo ─────────────────────────────────────────────────────────────
+@SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
 @Composable
 fun WebViewDemoScreen(navController: NavController) {
     Column(
@@ -141,47 +147,19 @@ fun WebViewDemoScreen(navController: NavController) {
     ) {
         BackBar(navController)
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp)
-        ) {
-            VulnBanner("⚠ VULNERABLE — addJavascriptInterface() enabled")
-
-            Spacer(Modifier.height(16.dp))
-            Text(
-                text       = "🌐 WebView JS Bridge",
-                fontFamily = Inter,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 24.sp,
-                color      = TextPrimary
-            )
-
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text       = "The WebViewDemoActivity loads webview_demo.html which has full " +
-                             "access to native Android code via the addJavascriptInterface() bridge.",
-                fontFamily = Inter,
-                fontSize   = 13.sp,
-                color      = TextSecondary,
-                lineHeight = 20.sp
-            )
-
-            Spacer(Modifier.height(20.dp))
-
-            TerminalBlock(
-                lines = listOf(
-                    "# WebView with JS bridge enabled" to false,
-                    "webView.settings.javaScriptEnabled = true" to true,
-                    "webView.addJavascriptInterface(bridge, \"Android\")" to true,
-                    "# Any JS on the page can now call native methods" to false,
-                    "# Android.readFile('/data/data/...')" to false,
-                    "# Android.getPackageName()" to false,
-                    "# Android.showToast('Hacked!')" to false
-                )
-            )
-        }
+        // Real WebView — JS bridge is live, buttons call native Android methods
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    settings.javaScriptEnabled = true
+                    settings.allowFileAccess   = true
+                    addJavascriptInterface(AndroidBridge(context), "Android")
+                    webViewClient = WebViewClient()
+                    loadUrl("file:///android_asset/webview_demo.html")
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 
