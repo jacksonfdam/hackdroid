@@ -7,11 +7,12 @@
 //   the Gadget into the process. The Gadget opens a Frida server *inside* the
 //   app's own process — no root required, because we're running as the app user.
 //
-//   You then connect from your laptop over USB and inject this script:
+//   The Gadget listens on TCP port 27042. Connect from your laptop:
 //
-//   $ frida -U -n Gadget -l bypass_root_detection.js
+//   $ adb forward tcp:27042 tcp:27042          # tunnel Gadget → localhost
+//   $ frida -H 127.0.0.1:27042 -l bypass_root_detection.js
 //
-//   (-n Gadget  →  attach to the waiting Gadget server by name)
+//   (-H 127.0.0.1:27042  →  connect to Gadget over TCP forwarding)
 //   (-f com.hackdroid.demo  →  use this form on rooted devices instead)
 //
 // WHAT THIS SCRIPT DOES:

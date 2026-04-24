@@ -14,7 +14,8 @@ class MainActivity : ComponentActivity() {
     companion object {
         init {
             // Load Frida Gadget when present (jniLibs/*/libfrida-gadget.so).
-            // On non-rooted devices this enables `frida -U -n Gadget`.
+            // On non-rooted devices: adb forward tcp:27042 tcp:27042, then
+            // frida -H 127.0.0.1:27042 -l script.js (Gadget listens on TCP).
             // Safe to ignore if the .so was not included in the build.
             try {
                 System.loadLibrary("frida-gadget")

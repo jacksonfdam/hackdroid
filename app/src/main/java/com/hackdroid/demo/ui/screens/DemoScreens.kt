@@ -348,7 +348,8 @@ fun FridaDemoScreen(navController: NavController) {
             listOf(
                 "1" to "App launches → libfrida-gadget.so is loaded via System.loadLibrary()",
                 "2" to "Gadget opens a local Frida server inside the process (port 27042)",
-                "3" to "frida -U -n Gadget connects to that server over USB",
+                "3" to "adb forward tcp:27042 tcp:27042  (tunnel Gadget port)",
+                "3b" to "frida -H 127.0.0.1:27042 attaches over that tunnel",
                 "4" to "Script calls Java.use() to get a reference to RootChecker class",
                 "5" to "Replaces isRooted() implementation → always returns false",
                 "6" to "App now believes it's running on a clean, non-rooted device"
@@ -383,10 +384,13 @@ fun FridaDemoScreen(navController: NavController) {
 
             TerminalBlock(
                 lines = listOf(
-                    "# Launch the app first, then:" to false,
-                    "$ frida -U -n Gadget -l bypass_root_detection.js" to true,
+                    "# 1. Launch app — screen freezes (Gadget waiting)" to false,
+                    "$ adb shell am start -n com.hackdroid.demo/.MainActivity" to false,
+                    "# 2. Forward Gadget port to localhost" to false,
+                    "$ adb forward tcp:27042 tcp:27042" to false,
+                    "# 3. Attach Frida over TCP" to false,
+                    "$ frida -H 127.0.0.1:27042 -l bypass_root_detection.js" to true,
                     "[HackDroid] Frida attached via Gadget" to false,
-                    "[HackDroid] Hooking RootChecker.isRooted()..." to false,
                     "[HackDroid] isRooted() called — returning false" to true,
                     "[HackDroid] ✓ Root detection bypassed" to true
                 )
