@@ -65,6 +65,8 @@ lint/tmp/
 
 # Frida Gadget binaries (large, download separately — see app/src/main/jniLibs/README.md)
 **/jniLibs/**/*.so
+# …but keep the JSON config file (tiny, needed at runtime, named *.config.so)
+!**/jniLibs/**/*.config.so
 
 # Mac/Linux
 .DS_Store
