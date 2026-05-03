@@ -26,7 +26,7 @@ curl -L "https://github.com/frida/frida/releases/download/${FRIDA_VERSION}/frida
 
 1. Place the `.so` files above and rebuild: `./gradlew assembleDebug`
 2. Install: `adb install -r app/build/outputs/apk/debug/app-debug.apk`
-3. Launch the app — the screen will **freeze** (Gadget is waiting for a debugger)
+3. Launch the app — it starts normally (Gadget listens in background, app does not freeze)
 4. Forward the Gadget TCP port:
    ```bash
    adb forward tcp:27042 tcp:27042
@@ -36,7 +36,7 @@ curl -L "https://github.com/frida/frida/releases/download/${FRIDA_VERSION}/frida
    frida -H 127.0.0.1:27042 Gadget \
      -l app/src/main/assets/frida_scripts/bypass_root_detection.js
    ```
-   The app unfreezes and the hook is live.
+   The hook is live.
 
 > **Why `-H 127.0.0.1:27042 Gadget` instead of `-U -n Gadget`?**  
 > The embedded Gadget listens on a TCP socket (not the USB frida-server transport).  

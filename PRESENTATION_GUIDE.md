@@ -371,12 +371,12 @@ db.query("users", null, "name = ?", arrayOf(input), null, null, null)
 > *"The tag on the slide says it: NO SOURCE CODE NEEDED. This works on any app, including ones from the Play Store."*
 
 **This app uses the Frida Gadget**, so no root is required — explain briefly:
-> *"We embedded a 24MB library called the Gadget into this APK. When the app launches, it pauses and opens a Frida server on TCP port 27042 inside its own process. We forward that port via ADB and attach over it — no root, no frida-server needed."*
+> *"We embedded a 24MB library called the Gadget into this APK. When the app launches, the Gadget opens a Frida server on TCP port 27042 inside its own process — silently, in the background. We forward that port via ADB and attach whenever we want — no root, no frida-server needed."*
 
 **🔧 LIVE DEMO 6 — Bypass Root Detection:**
 
 ```bash
-# 1. Launch the app — screen will freeze (Gadget is waiting)
+# 1. Launch the app (starts normally — Gadget listens silently in background)
 adb shell am start -n com.hackdroid.demo/.MainActivity
 
 # 2. Forward the Gadget TCP port to localhost

@@ -162,7 +162,7 @@ frida -U -f com.hackdroid.demo \
 # 1. Build & install
 ./gradlew assembleDebug && adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-# 2. Launch app — screen freezes (Gadget waiting on port 27042)
+# 2. Launch app — starts normally (Gadget listens on port 27042 in background)
 adb shell am start -n com.hackdroid.demo/.MainActivity
 
 # 3. Forward Gadget TCP port to localhost

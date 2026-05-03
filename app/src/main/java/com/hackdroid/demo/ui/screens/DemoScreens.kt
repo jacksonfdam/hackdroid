@@ -362,7 +362,7 @@ fun FridaDemoScreen(navController: NavController) {
 
             TerminalBlock(
                 lines = listOf(
-                    "# 1. Launch app — screen freezes (Gadget waiting)" to false,
+                    "# 1. Launch app (Gadget listens silently on port 27042)" to false,
                     "$ adb shell am start -n com.hackdroid.demo/.MainActivity" to false,
                     "# 2. Forward Gadget port to localhost" to false,
                     "$ adb forward tcp:27042 tcp:27042" to false,
