@@ -1,7 +1,18 @@
 # Hacking Android — Presentation Guide & Speaker Notes
 
+## Speaker
+
+**Jackson Mafra** — Mobile Engineer @ Umain, focused on Android.  
+Over the last few years developed an obsession with breaking things — understanding not just how apps work, but how they fail. Reading, writing, pen testing. On the path to mobile security expertise.
+
+- 🐙 GitHub: [github.com/jacksonfdam](https://github.com/jacksonfdam)
+- 💼 LinkedIn: [linkedin.com/in/jacksonmafra](https://linkedin.com/in/jacksonmafra)
+- ✍️ Medium: [medium.com/@jacksonmafra](https://medium.com/@jacksonmafra)
+
+---
+
 > **Talk:** Hacking Android From the Inside Out  
-> **Deck:** 17 slides (incl. Easter egg) + live HackDroid app demos  
+> **Deck:** 18 slides (incl. About Me + Easter egg) + live HackDroid app demos  
 > **Suggested total time:** 45–60 min  
 > **Format:** Slides → concept → live demo → takeaway, repeated for each vuln
 
@@ -43,27 +54,25 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 | # | Slide name in file | Headline | Demo | ~Time |
 |---|---|---|---|---|
-| 01 | Slide 01 - Title | HACKING ANDROID / FROM THE INSIDE OUT | — | 2 min |
-| 02 | Slide 02 - Easter Egg ⭐ | THESE AREN'T THE DROIDS YOU'RE LOOKING FOR | — | 30 s |
-| 03 | Slide 02 - Why Android | 70% of the World Runs Android | — | 3 min |
-| 04 | Slide 03 - Architecture | The Architecture Nobody Talks About | — | 3 min |
-| 05 | Slide 04 - App Sandbox | Every App Lives in Its Own Box | — | 3 min |
-| 06 | Slide 05 - APK Structure | An APK Is Just a ZIP File | — | 2 min |
-| 07 | Slide 06 - Toolkit | Tools of the Trade | — | 2 min |
-| 08 | Slide 07 - Reverse Engineering | Reading Code That Was Never Meant to Be Read | JADX | 4 min |
-| 09 | Slide 08 - Attack Surface | Where Things Go Wrong | — | 2 min |
-| 10 | Slide 09 - Exported Components | Leaving the Door Unlocked | `adb am start` | 5 min |
-| 11 | Slide 10 - Deep Links | Malicious Links That Open Your App | `adb am start VIEW` | 4 min |
-| 12 | Slide 11 - WebViews | A Browser Inside Your App | WebView in app | 4 min |
-| 13 | Slide 12 - Insecure Storage | Sensitive Data Left in Plain Sight | `adb run-as` | 4 min |
-| 14 | Slide 13 - SQL Injection | Yes, SQLi Exists in Mobile Apps Too | `adb content query` | 4 min |
-| 15 | Slide 14 - Frida | Hooking Into a Running App | Frida Gadget | 6 min |
-| 16 | Slide 15 - Takeaways | What This Means for Builders and Defenders | — | 3 min |
-| 17 | Slide 16 - Closing | Android Security Is a Mindset | — | 2 min |
+| 01 | Slide 01 - Title | HACKING ANDROID / FROM THE INSIDE OUT | — | 1 min |
+| 02 | Slide 02 - About Me | JACKSON MAFRA / WHO_AM_I.log | — | 1 min |
+| 03 | Slide 02 - Easter Egg ⭐ | THESE AREN'T THE DROIDS YOU'RE LOOKING FOR | — | 30 s |
+| 04 | Slide 02 - Why Android | 70% of the World Runs Android | — | 3 min |
+| 05 | Slide 03 - Architecture | The Architecture Nobody Talks About | — | 3 min |
+| 06 | Slide 04 - App Sandbox | Every App Lives in Its Own Box | — | 3 min |
+| 07 | Slide 05 - APK Structure | An APK Is Just a ZIP File | — | 2 min |
+| 08 | Slide 06 - Toolkit | Tools of the Trade | — | 2 min |
+| 09 | Slide 07 - Reverse Engineering | Reading Code That Was Never Meant to Be Read | JADX | 4 min |
+| 10 | Slide 08 - Attack Surface | Where Things Go Wrong | — | 2 min |
+| 11 | Slide 09 - Exported Components | Leaving the Door Unlocked | `adb am start` | 5 min |
+| 12 | Slide 10 - Deep Links | Malicious Links That Open Your App | `adb am start VIEW` | 4 min |
+| 13 | Slide 11 - WebViews | A Browser Inside Your App | WebView in app | 4 min |
+| 14 | Slide 12 - Insecure Storage | Sensitive Data Left in Plain Sight | `adb run-as` | 4 min |
+| 15 | Slide 13 - SQL Injection | Yes, SQLi Exists in Mobile Apps Too | `adb content query` | 4 min |
+| 16 | Slide 14 - Frida | Hooking Into a Running App | Frida Gadget | 6 min |
+| 17 | Slide 15 - Takeaways | What This Means for Builders and Defenders | — | 3 min |
+| 18 | Slide 16 - Closing | Android Security Is a Mindset | — | 2 min |
 | — | Q&A | | | 10 min |
-
-> **Note:** "Slide 02 - Why Android" is named `02` in the file but sits in position 3 on canvas
-> (the Easter Egg was inserted between them). Present them in canvas order above.
 
 ---
 
@@ -83,7 +92,17 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 ---
 
-### Slide 02 — Easter Egg ⭐ (May 4th)
+### Slide 02 — About Me
+**WHO_AM_I.log**
+
+> *"I'm a mobile engineer at Umain, mostly Android. Over the last few years I've developed a bit of an obsession with breaking things — not just understanding how apps work, but how they fail. I've been diving into mobile security, reading, writing, some pen testing. I'm not an expert — yet. But I've learned a lot along the way, and that's what I want to share with you today."*
+
+- Point at the links on the right — GitHub, LinkedIn, Medium — tell the audience they can find the code there
+- Keep it under 60 seconds — don't over-explain, let the talk do the work
+
+---
+
+### Slide 03 — Easter Egg ⭐ (May 4th)
 **THESE AREN'T THE DROIDS YOU'RE LOOKING FOR**  
 `— They all have android:exported='true'`
 
@@ -94,7 +113,7 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 ---
 
-### Slide 03 — Why Android
+### Slide 04 — Why Android
 **70% of the World Runs Android**
 
 > *"Three billion active devices. The most targeted mobile OS. And apps are handling your bank account, your health data, your identity. The stakes couldn't be higher — and yet security is almost always an afterthought. Let's talk about why."*
@@ -107,7 +126,7 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 ---
 
-### Slide 04 — Architecture
+### Slide 05 — Architecture
 **The Architecture Nobody Talks About**
 
 > *"Before we attack anything, we need to understand what we're attacking. Android is a Linux kernel at the bottom, the Android Runtime in the middle — that's where your Kotlin and Java bytecode runs — and the app framework on top. Security decisions happen at every layer. And so do mistakes."*
@@ -120,7 +139,7 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 ---
 
-### Slide 05 — App Sandbox
+### Slide 06 — App Sandbox
 **Every App Lives in Its Own Box**
 
 > *"Each app gets its own Linux user ID — a unique UID. App A literally cannot read App B's files. The kernel enforces it. The only way apps talk to each other is through a controlled IPC bridge called Binder — think of it as a bouncer that checks your credentials before you cross the rope."*
@@ -134,7 +153,7 @@ Slides are in `slides/slides.pen`. The order on canvas (left → right) is:
 
 ---
 
-### Slide 06 — APK Structure
+### Slide 07 — APK Structure
 **An APK Is Just a ZIP File**
 
 > *"Here's something your app store doesn't tell your users: anyone can download your APK and unzip it. Right now. Let me show you what's inside."*
@@ -155,7 +174,7 @@ cat /tmp/extracted/AndroidManifest.xml | head -40
 
 ---
 
-### Slide 07 — Toolkit
+### Slide 08 — Toolkit
 **Tools of the Trade**
 
 > *"These are the five tools you need to attack any Android app. All free, all open source, all legal when used on apps you own."*
@@ -172,7 +191,7 @@ cat /tmp/extracted/AndroidManifest.xml | head -40
 
 ---
 
-### Slide 08 — Reverse Engineering
+### Slide 09 — Reverse Engineering
 **Reading Code That Was Never Meant to Be Read**
 
 > *"JADX takes compiled bytecode — Smali assembly, which looks like this — and turns it back into something remarkably close to the original Java source. Here's what I found in a real app last year."*
@@ -194,7 +213,7 @@ open /tmp/out/sources/com/hackdroid/demo/data/VulnerabilityData.java
 
 ---
 
-### Slide 09 — Attack Surface
+### Slide 10 — Attack Surface
 **Where Things Go Wrong**
 
 > *"Here's the map of today's talk. Seven entry points into a typical Android app. We're going to walk through each one — theory first, then live exploit on the real device."*
@@ -207,7 +226,7 @@ open /tmp/out/sources/com/hackdroid/demo/data/VulnerabilityData.java
 
 ---
 
-### Slide 10 — Exported Components
+### Slide 11 — Exported Components
 **Leaving the Door Unlocked**
 
 **Concept (60 seconds):**
@@ -238,7 +257,7 @@ adb shell am start -n com.hackdroid.demo/.vulns.AdminActivity
 
 ---
 
-### Slide 11 — Deep Links
+### Slide 12 — Deep Links
 **Malicious Links That Open Your App**
 
 **Concept (45 seconds):**
@@ -262,7 +281,7 @@ adb shell am start -a android.intent.action.VIEW \
 
 ---
 
-### Slide 12 — WebViews
+### Slide 13 — WebViews
 **A Browser Inside Your App**
 
 **Concept (60 seconds):**
@@ -284,7 +303,7 @@ In HackDroid: Vulns → WebViews / JS Bridge → Run Demo Exploit
 
 ---
 
-### Slide 13 — Insecure Storage
+### Slide 14 — Insecure Storage
 **Sensitive Data Left in Plain Sight**
 
 **Concept (45 seconds):**
@@ -312,7 +331,7 @@ adb shell run-as com.hackdroid.demo \
 
 ---
 
-### Slide 14 — SQL Injection
+### Slide 15 — SQL Injection
 **Yes, SQLi Exists in Mobile Apps Too**
 
 **Concept (45 seconds):**
@@ -343,7 +362,7 @@ db.query("users", null, "name = ?", arrayOf(input), null, null, null)
 
 ---
 
-### Slide 15 — Frida
+### Slide 16 — Frida
 **Hooking Into a Running App**
 
 **Concept (90 seconds):**
@@ -407,7 +426,7 @@ frida -H 127.0.0.1:27042 Gadget -l script.js
 
 ---
 
-### Slide 16 — Takeaways
+### Slide 17 — Takeaways
 **What This Means for Builders and Defenders**
 
 > *"Let me leave you with two columns. Left is the attacker mindset — things an attacker knows about your app before they write a single line of code. Right is what you can do about it."*
@@ -426,7 +445,7 @@ frida -H 127.0.0.1:27042 Gadget -l script.js
 
 ---
 
-### Slide 17 — Closing
+### Slide 18 — Closing
 **Android Security Is a Mindset**
 
 > *"The four pills at the bottom are the summary. Understand the architecture. Know your attack surface. Think like an attacker. Build like a defender."*
@@ -489,4 +508,4 @@ adb logcat | grep HackDroid_LEAK
 | ADB permission denied | Run-as fix: always use `adb shell run-as com.hackdroid.demo ...` |
 | Audience can't read terminal | Zoom in: Cmd+= or increase terminal font on the fly |
 | Running short on time | Skip Demos 5 (SQLi) and the Broadcast/Logcat extras — core story holds |
-| Running long | Skip Slides 07 (Toolkit detail) and 08 (Reverse Engineering demo) |
+| Running long | Skip Slides 08 (Toolkit detail) and 09 (Reverse Engineering demo) |
