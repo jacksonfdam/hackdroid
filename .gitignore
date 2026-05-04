@@ -76,3 +76,6 @@ lint/tmp/
 # Windows
 Thumbs.db
 .claude/
+
+PRESENTATION_GUIDE.md
+PRESENTATION_GUIDE_FAST.md
