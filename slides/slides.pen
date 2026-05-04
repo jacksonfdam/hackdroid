@@ -7558,8 +7558,8 @@
           "x": 160,
           "y": 760,
           "name": "s16pillrow",
-          "width": 1680,
-          "height": 160,
+          "width": 1441,
+          "height": 120,
           "gap": 20,
           "children": [
             {
@@ -7712,7 +7712,7 @@
           "type": "rectangle",
           "id": "Cas2o",
           "x": 1631,
-          "y": 524,
+          "y": 655,
           "fill": {
             "type": "image",
             "enabled": true,
