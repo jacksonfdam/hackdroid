@@ -32,10 +32,13 @@ Java.perform(function () {
         var allEntries = this.getAll();
         console.log("[HackDroid] === SharedPreferences.getAll() DUMP ===");
 
-        var iterator = allEntries.entrySet().iterator();
-        while (iterator.hasNext()) {
-            var entry = iterator.next();
-            console.log("[HackDroid]   " + entry.getKey() + " = " + entry.getValue());
+        // Use keySet() iterator — Map.Entry objects from entrySet() are not
+        // properly typed by Frida's Java bridge and getKey()/getValue() fail.
+        var keyIterator = allEntries.keySet().iterator();
+        while (keyIterator.hasNext()) {
+            var key = keyIterator.next().toString();
+            var val = allEntries.get(key);
+            console.log("[HackDroid]   " + key + " = " + val);
         }
         console.log("[HackDroid] === END DUMP ===");
         return allEntries;
@@ -63,10 +66,10 @@ Java.perform(function () {
         console.log("[HackDroid] === IMMEDIATE AUTH_PREFS DUMP ===");
         var authPrefs = ctx.getSharedPreferences("auth_prefs", 0); // MODE_PRIVATE = 0
         var allAuth   = authPrefs.getAll();
-        var authIter  = allAuth.entrySet().iterator();
-        while (authIter.hasNext()) {
-            var authEntry = authIter.next();
-            console.log("[HackDroid]   " + authEntry.getKey() + " => " + authEntry.getValue());
+        var authKeyIter = allAuth.keySet().iterator();
+        while (authKeyIter.hasNext()) {
+            var authKey = authKeyIter.next().toString();
+            console.log("[HackDroid]   " + authKey + " => " + allAuth.get(authKey));
         }
         console.log("[HackDroid] === END AUTH_PREFS DUMP ===");
     } catch (e) {
